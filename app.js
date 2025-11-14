@@ -13,6 +13,9 @@ const app = express();
 
 // --- GOV.UK assets ---
 const govukFrontendPath = path.dirname(require.resolve('govuk-frontend/package.json'));
+// Serve fonts, images, and other assets from the assets directory
+app.use('/assets', express.static(path.join(govukFrontendPath, 'dist', 'govuk', 'assets')));
+// Serve CSS and JS files from the root govuk directory
 app.use('/assets', express.static(path.join(govukFrontendPath, 'dist', 'govuk')));
 
 // Your static (optional)
