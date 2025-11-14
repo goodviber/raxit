@@ -1,0 +1,33 @@
+{% extends "layout.njk" %}
+{% block content %}
+<div class="govuk-panel govuk-panel--confirmation">
+  <h1 class="govuk-panel__title">Details submitted</h1>
+  <div class="govuk-panel__body">
+    Reference<br><strong>#{{ record.id }}</strong>
+  </div>
+</div>
+
+<h2 class="govuk-heading-m">What you sent</h2>
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Preference</dt>
+    <dd class="govuk-summary-list__value">{{ record.preference | capitalize }}</dd>
+  </div>
+
+  {% if record.email %}
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">Email</dt>
+      <dd class="govuk-summary-list__value">{{ record.email }}</dd>
+    </div>
+  {% endif %}
+
+  {% if record.phone %}
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">Phone</dt>
+      <dd class="govuk-summary-list__value">{{ record.phone }}</dd>
+    </div>
+  {% endif %}
+</dl>
+
+<p class="govuk-body"><a class="govuk-link" href="/">Submit another response</a></p>
+{% endblock %}

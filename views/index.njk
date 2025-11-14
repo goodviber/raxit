@@ -1,0 +1,74 @@
+{% set pageTitle = "How should we contact you?" %}
+
+{% extends "layout.njk" %}
+{% block content %}
+<h1 class="govuk-heading-l">{{ pageTitle }}</h1>
+
+<form method="post" action="/submit" novalidate>
+
+  {# Radios with conditional reveal #}
+  <div class="govuk-form-group {% if errors.contact_preference %}govuk-form-group--error{% endif %}">
+    <fieldset class="govuk-fieldset" aria-describedby="preference-hint">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+        Contact preference
+      </legend>
+      <div id="preference-hint" class="govuk-hint">
+        We’ll only ask for the details needed for your choice.
+      </div>
+      {% if errors.contact_preference %}
+        <p class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> {{ errors.contact_preference }}</p>
+      {% endif %}
+
+      <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios">
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input"
+                 id="contact-email"
+                 name="contact_preference"
+                 type="radio"
+                 value="email"
+                 data-aria-controls="conditional-email"
+                 {% if values.contact_preference == 'email' %}checked{% endif %}>
+          <label class="govuk-label govuk-radios__label" for="contact-email">
+            Email
+          </label>
+        </div>
+        <div class="govuk-radios__conditional" id="conditional-email">
+          <div class="govuk-form-group {% if errors.email %}govuk-form-group--error{% endif %}">
+            <label class="govuk-label" for="email">Email address</label>
+            {% if errors.email %}
+              <p class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> {{ errors.email }}</p>
+            {% endif %}
+            <input class="govuk-input" id="email" name="email" type="email" spellcheck="false"
+                   value="{{ values.email or '' }}">
+          </div>
+        </div>
+
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input"
+                 id="contact-phone"
+                 name="contact_preference"
+                 type="radio"
+                 value="phone"
+                 data-aria-controls="conditional-phone"
+                 {% if values.contact_preference == 'phone' %}checked{% endif %}>
+          <label class="govuk-label govuk-radios__label" for="contact-phone">
+            Phone
+          </label>
+        </div>
+        <div class="govuk-radios__conditional" id="conditional-phone">
+          <div class="govuk-form-group {% if errors.phone %}govuk-form-group--error{% endif %}">
+            <label class="govuk-label" for="phone">Phone number</label>
+            {% if errors.phone %}
+              <p class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> {{ errors.phone }}</p>
+            {% endif %}
+            <input class="govuk-input" id="phone" name="phone" type="tel"
+                   value="{{ values.phone or '' }}">
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+
+  <button class="govuk-button" data-module="govuk-button">Submit</button>
+</form>
+{% endblock %}
